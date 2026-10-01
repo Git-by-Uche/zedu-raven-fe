@@ -165,8 +165,6 @@ export default function ChatConnection() {
           return;
         }
 
-        dispatch({ type: ACTIONS.AGENT_STATE, payload: ctx?.data });
-
         if (data?.type === "message" && data.user_type === "user") {
           dispatch({
             type: ACTIONS.USER_TYPING,

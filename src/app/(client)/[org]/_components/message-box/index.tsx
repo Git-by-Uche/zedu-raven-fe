@@ -111,6 +111,7 @@ const MessageBox = ({
   show = true,
   channelLoading = false,
   draftKey,
+  showTyping = true,
 }: any) => {
   const { state, dispatch } = useContext(DataContext);
   const params = useParams();
@@ -357,10 +358,12 @@ const MessageBox = ({
   };
 
   const onEmojiClick = (emojiData: any) => {
-    if (editor) {
-      editor.chain().focus().insertContent(emojiData?.native).run();
-      setIsEmojiPickerOpen(false);
-    }
+    const native = emojiData?.native as string | undefined;
+    if (!editor || !native) return;
+    setIsEmojiPickerOpen(false);
+    queueMicrotask(() => {
+      editor.chain().focus().insertContent(native).run();
+    });
   };
 
   const handleGifSelect = async (gif: LocalGif) => {
@@ -516,7 +519,7 @@ const MessageBox = ({
         />
       )}
 
-      <div className="relative mx-3 md:mx-5">
+      <div className="relative mx-3 md:mx-5 pb-3">
         <div
           onClick={() => !channelLoading && editor && editor.commands.focus()}
           onDragOver={handleDragOver}
@@ -949,7 +952,7 @@ const MessageBox = ({
             </div>
           </div>
         </div>
-        <TypingUsers />
+        {showTyping ? <TypingUsers /> : null}
       </div>
     </div>
   );
