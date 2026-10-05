@@ -458,7 +458,7 @@ function Login() {
                     variant="ghost"
                     className="w-fit text-startß !p-0 border-none border-[#8760f8] text-[#8760f8] bg-white h-2"
                   >
-                    Login with magic link
+                    Login With Magic Link
                   </Button>
                 </Link>
               </div>
